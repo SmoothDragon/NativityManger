@@ -7,6 +7,7 @@ Make a holder for food processor blades
 import solid
 import math
 
+inf = 1000
 
 XX = 26  # width
 YY = 40  # depth
@@ -40,10 +41,25 @@ head = solid.scale([1,1,.7])(head)
 head = solid.translate([0,.20*YY, .15*ZZ])(head)
 
 jesus = solid.sphere(d=1)
-jesus = solid.scale([.5*XX, .7*YY, .5*ZZ])(jesus)
+# jesus = solid.scale([.5*XX, .7*YY, .5*ZZ])(jesus) # v1
+jesus = solid.scale([10, 20, 5])(jesus) # v2
+jesus = solid.minkowski()(solid.cube([2,8,1], center=True), jesus) # v2
+
+swaddle = solid.cube(inf, center=True)
+swaddle = solid.translate([inf/2-2.5, 0, 0])(swaddle)
+swaddle = solid.rotate([0,45,-45])(swaddle)
+swaddle_r = solid.intersection()(swaddle, solid.scale(1)(jesus))
+swaddle_r = solid.translate([0,0,1])(swaddle_r)
+swaddle = solid.rotate([0,0,-90])(swaddle)
+swaddle_l = solid.intersection()(swaddle, solid.scale(1)(jesus))
+swaddle_l = solid.translate([0,0,.5])(swaddle_l)
+
+jesus += swaddle_l 
+jesus += swaddle_r
 jesus = jesus + head
 jesus = solid.scale([1.2,1.2,1.2])(jesus)
-jesus = solid.translate([0,0,ZZ*.8])(jesus)
+jesus = solid.rotate([4,0,0])(jesus)
+jesus = solid.translate([0,0,ZZ*.79])(jesus)
 
 
 final = base - fins
@@ -80,4 +96,4 @@ for x,y in xy_shift:
     base -= solid.translate([x,y,lift])(drain_hole)
 final = base
 '''
-print(solid.scad_render(final, file_header="$fn=64;"))
+print(solid.scad_render(final, file_header="$fn=256;"))

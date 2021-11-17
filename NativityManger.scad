@@ -1,4 +1,4 @@
-$fn=64;
+$fn=256;
 
 
 union() {
@@ -566,15 +566,56 @@ union() {
 			}
 		}
 	}
-	translate(v = [0, 0, 12.0000000000]) {
-		scale(v = [1.2000000000, 1.2000000000, 1.2000000000]) {
-			union() {
-				scale(v = [13.0000000000, 28.0000000000, 7.5000000000]) {
-					sphere(d = 1);
-				}
-				translate(v = [0, 8.0000000000, 2.2500000000]) {
-					scale(v = [1, 1, 0.7000000000]) {
-						sphere(d = 6.5000000000);
+	translate(v = [0, 0, 11.8500000000]) {
+		rotate(a = [4, 0, 0]) {
+			scale(v = [1.2000000000, 1.2000000000, 1.2000000000]) {
+				union() {
+					minkowski() {
+						cube(center = true, size = [2, 8, 1]);
+						scale(v = [10, 20, 5]) {
+							sphere(d = 1);
+						}
+					}
+					translate(v = [0, 0, 0.5000000000]) {
+						intersection() {
+							rotate(a = [0, 0, -90]) {
+								rotate(a = [0, 45, -45]) {
+									translate(v = [497.5000000000, 0, 0]) {
+										cube(center = true, size = 1000);
+									}
+								}
+							}
+							scale(v = 1) {
+								minkowski() {
+									cube(center = true, size = [2, 8, 1]);
+									scale(v = [10, 20, 5]) {
+										sphere(d = 1);
+									}
+								}
+							}
+						}
+					}
+					translate(v = [0, 0, 1]) {
+						intersection() {
+							rotate(a = [0, 45, -45]) {
+								translate(v = [497.5000000000, 0, 0]) {
+									cube(center = true, size = 1000);
+								}
+							}
+							scale(v = 1) {
+								minkowski() {
+									cube(center = true, size = [2, 8, 1]);
+									scale(v = [10, 20, 5]) {
+										sphere(d = 1);
+									}
+								}
+							}
+						}
+					}
+					translate(v = [0, 8.0000000000, 2.2500000000]) {
+						scale(v = [1, 1, 0.7000000000]) {
+							sphere(d = 6.5000000000);
+						}
 					}
 				}
 			}
